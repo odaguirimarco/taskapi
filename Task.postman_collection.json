@@ -1,0 +1,198 @@
+{
+	"info": {
+		"_postman_id": "d089454d-02ff-4275-b2b8-ca4f736f46bc",
+		"name": "Task",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "34660187"
+	},
+	"item": [
+		{
+			"name": "List all tasks",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/api/tasks",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"tasks"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CSRF Token",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/csrf",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"csrf"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get by id",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/api/tasks/1",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"tasks",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create task",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "admin",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "admin",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "X-CSRF-TOKEN",
+						"value": "oQNpKqtnqrbXSHd8YNA6_iDRbBltBeU1G77hDG1jnFzQxpbxkTQPTpgFztf6fxFOA_0OxkHpQXsPMIEYLYmFNV1Tr2Tp96GV",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"title\": \"Second Task\",\n  \"description\": \"TEst\",\n  \"dueDate\": \"2024-12-31\",\n  \"status\": \"TO_DO\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/api/tasks",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"tasks"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Task",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "admin",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "admin",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [
+					{
+						"key": "X-CSRF-TOKEN",
+						"value": "hnGCIAueehERiGuhpvyW7ZAuROyBisTl4BIHpcihvzs_97Q850mzGGj9HiE8sF6YwNGi1KZMadXivqbIhnRlkK2Zig1aloFa",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n          \"title\": \"Updated Task\",\n          \"description\": \"Updated task description\",\n          \"dueDate\": \"2025-04-08\",\n          \"status\": \"IN_PROGRESS\"\n        }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/api/tasks/1",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"tasks",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Task",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/api/tasks",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"tasks"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"variable": [
+		{
+			"key": "CSRF-TOKEN",
+			"value": "xoDm0wMMmfgroezdxnLNCy8qIuPp2yG2YTtyjXY7qqsnnyR-_7jTt2Y7rpkGxI7l91_5b01MD9rRuhObVgoRuRVak5of_UVL",
+			"type": "default"
+		}
+	]
+}
