@@ -81,6 +81,7 @@ First, retrieve the CSRF token. This is necessary for POST, PUT, and DELETE requ
     ```
 
     * Replace `<YOUR_CSRF_TOKEN>` with the token from step 1.
+    * Not sure why this is only working in Postman
 
 * **Postman:**
 
@@ -143,6 +144,7 @@ First, retrieve the CSRF token. This is necessary for POST, PUT, and DELETE requ
     ```
 
     * Replace `<TASK_ID>` and `<YOUR_CSRF_TOKEN>`.
+    * Not sure why this is only working in Postman
 
 * **Postman:**
 
@@ -172,6 +174,7 @@ First, retrieve the CSRF token. This is necessary for POST, PUT, and DELETE requ
     ```
 
     * Replace `<TASK_ID>` and `<YOUR_CSRF_TOKEN>`.
+    * Not sure why this is only working in Postman
 
 * **Postman:**
 
