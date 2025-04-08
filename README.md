@@ -10,10 +10,12 @@ This is a RESTful API for managing tasks. It uses Spring Boot, Spring Security, 
 
 ## Running the Application
 
-1.  **Extract the Project:**
+1. **Clone the Repository:**
 
-    * Download the project ZIP file.
-    * Extract the contents of the ZIP file to a directory of your choice.
+    ```bash
+    git clone https://github.com/odaguirimarco/taskapi
+    cd taskapi
+    ```
 
 2.  **Build the Application:**
 

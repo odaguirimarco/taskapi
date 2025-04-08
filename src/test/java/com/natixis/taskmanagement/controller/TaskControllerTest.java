@@ -10,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithMockUser;
+import org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.time.LocalDate;
@@ -44,12 +46,14 @@ public class TaskControllerTest {
     }
 
     @Test
+    @WithMockUser
     void createTask_shouldReturnCreatedTaskAndStatusCreated() throws Exception {
         when(taskService.createTask(any(Task.class))).thenReturn(task1);
 
         mockMvc.perform(post("/api/tasks")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(task1)))
+                        .content(objectMapper.writeValueAsString(task1))
+                        .with(SecurityMockMvcRequestPostProcessors.csrf())) // Add CSRF token
                 .andExpect(status().isCreated())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.id").value(1L))
@@ -59,6 +63,7 @@ public class TaskControllerTest {
     }
 
     @Test
+    @WithMockUser
     void getAllTasks_shouldReturnListOfTasksAndStatusOk() throws Exception {
         List<Task> tasks = Arrays.asList(task1, task2);
         when(taskService.getAllTasks()).thenReturn(tasks);
@@ -73,6 +78,7 @@ public class TaskControllerTest {
     }
 
     @Test
+    @WithMockUser
     void getTaskById_shouldReturnTaskAndStatusOkWhenFound() throws Exception {
         when(taskService.getTaskById(1L)).thenReturn(task1);
 
@@ -85,6 +91,7 @@ public class TaskControllerTest {
     }
 
     @Test
+    @WithMockUser
     void getTaskById_shouldReturnStatusNotFoundWhenNotFound() throws Exception {
         when(taskService.getTaskById(1L)).thenThrow(new NoSuchElementException("Task not found"));
 
@@ -95,6 +102,7 @@ public class TaskControllerTest {
     }
 
     @Test
+    @WithMockUser
     void updateTask_shouldReturnUpdatedTaskAndStatusOk() throws Exception {
         Task updatedTask = new Task(1L, "Updated Task", "Updated Description - DONE",
                 LocalDate.now().plusDays(2), TaskStatus.DONE);
@@ -102,7 +110,8 @@ public class TaskControllerTest {
 
         mockMvc.perform(put("/api/tasks/1")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(updatedTask)))
+                        .content(objectMapper.writeValueAsString(updatedTask))
+                        .with(SecurityMockMvcRequestPostProcessors.csrf())) // Add CSRF token
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.title").value("Updated Task"));
@@ -111,6 +120,7 @@ public class TaskControllerTest {
     }
 
     @Test
+    @WithMockUser
     void updateTask_shouldReturnStatusNotFoundWhenNotFound() throws Exception {
         Task updatedTask = new Task(1L, "Updated Task", "Updated Description",
                 LocalDate.now().plusDays(2), TaskStatus.DONE);
@@ -118,27 +128,32 @@ public class TaskControllerTest {
 
         mockMvc.perform(put("/api/tasks/1")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(updatedTask)))
+                        .content(objectMapper.writeValueAsString(updatedTask))
+                        .with(SecurityMockMvcRequestPostProcessors.csrf())) // Add CSRF token
                 .andExpect(status().isNotFound());
 
         verify(taskService, times(1)).updateTask(eq(1L), any(Task.class));
     }
 
     @Test
+    @WithMockUser
     void deleteTask_shouldReturnStatusNoContent() throws Exception {
         doNothing().when(taskService).deleteTask(1L);
 
-        mockMvc.perform(delete("/api/tasks/1"))
+        mockMvc.perform(delete("/api/tasks/1")
+                        .with(SecurityMockMvcRequestPostProcessors.csrf())) // Add CSRF token)
                 .andExpect(status().isNoContent());
 
         verify(taskService, times(1)).deleteTask(1L);
     }
 
     @Test
+    @WithMockUser
     void deleteTask_shouldReturnStatusNotFoundWhenNotFound() throws Exception {
         doThrow(new NoSuchElementException("Task not found")).when(taskService).deleteTask(1L);
 
-        mockMvc.perform(delete("/api/tasks/1"))
+        mockMvc.perform(delete("/api/tasks/1")
+                        .with(SecurityMockMvcRequestPostProcessors.csrf())) // Add CSRF token)
                 .andExpect(status().isNotFound());
 
         verify(taskService, times(1)).deleteTask(1L);
